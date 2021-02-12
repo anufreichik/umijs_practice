@@ -13,14 +13,14 @@ interface IProps {
 
 function TaskForm(props: IProps) {
   console.log(props)
-  const stateAction = get(props, "location.state", 'add')==='add'?'Save':'Update';
+  const stateAction = get(props, "location.state", 'add');
+  const stateActionName = get(props, "location.state", 'add')==='add'?'Save':'Update';
   const taskId = get(props, "match.params.taskId");
   const [task, setTask] = useState<ITask>({ _id: "", name: "", completed: false, status: "" });
   const [completed, setCompleted] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [action, setAction]=useState<string>('Save')
-
 
   useEffect(() => {
     const currentTask = props.TaskList.find((el: ITask) => el._id === taskId);
@@ -48,7 +48,7 @@ function TaskForm(props: IProps) {
 
   const onFormSubmit = (e: any) => {
     e.preventDefault();
-    if(action==='Update')
+    if(action==='edit')
       props.updateTaskById({...task,completed:completed, status:status, name:name});
     else
       props.create({_id:uuidv4(), completed:completed, status:status, name:name})
@@ -84,7 +84,7 @@ function TaskForm(props: IProps) {
                       defaultValue={String(completed)} />
         </Form.Group>
         <Button variant="primary" type="submit">
-          {action}
+          {stateActionName}
         </Button>
       </Form>
     </div>
