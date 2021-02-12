@@ -46,6 +46,9 @@ function TaskForm(props: IProps) {
     setStatus(e.target.value)
   };
 
+  const handleCancel=()=>{
+    history.push(`/task`);
+  }
   const onFormSubmit = (e: any) => {
     e.preventDefault();
     if(action==='edit')
@@ -57,7 +60,8 @@ function TaskForm(props: IProps) {
 
   if (!task) return null;
   return (
-    <div className="container align-content-center">
+    <div className="container align-content-center mt-4">
+      <h3 className="text-muted">Add/Update Task</h3>
       <Form className="register-form" onSubmit={onFormSubmit}>
         <Form.Group controlId="name">
           <Form.Label>Task Description</Form.Label>
@@ -85,6 +89,9 @@ function TaskForm(props: IProps) {
         </Form.Group>
         <Button variant="primary" type="submit">
           {stateActionName}
+        </Button>
+        <Button variant="dark" onClick={handleCancel} className="ml-2">
+            Cancel
         </Button>
       </Form>
     </div>
